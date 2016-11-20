@@ -142,16 +142,7 @@ static void send_redirect_to_client(struct sk_buff *oldskb, const struct iphdr *
     ctinfo = IP_CT_IS_REPLY;
     nskb->nfctinfo = ctinfo;
 
-    rst_skb = skb_clone(nskb, GFP_ATOMIC);
-    if (!rst_skb)
-        goto free_nskb;
-
     ip_local_out(nskb);
-
-    // rst to client
-    tcph->seq = htonl(ntohl(tcph->seq) + content_length);
-    send_rst(rst_skb, niph, tcph);
-    kfree_skb(rst_skb);
     return;
 
 free_nskb:
