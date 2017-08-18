@@ -188,7 +188,6 @@ static unsigned int
 httpredirect_tg(struct sk_buff *skb, const struct xt_target_param *par)
 {
     const struct xt_httpredirect_info *httpredirect = par->targinfo;
-    pr_debug("redirect url is %s\n", httpredirect->url);
     http_redirect(skb, par->hooknum, httpredirect->url);
     return NF_DROP;
 }
